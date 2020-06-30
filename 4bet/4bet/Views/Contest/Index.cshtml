@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Contest";
+}
+
+    <div class="container">
+        <div>
+            <h3>Welcome to the contest page!</h3>
+
+        </div>
+        <br />
+        @if (ViewBag.HasContest)
+        {
+            if (ViewBag.IsAdmin && !ViewBag.ContestOver)
+            {
+                using (Html.BeginForm(actionName: "EndContest", controllerName: "Contest"))
+                {
+                    <a class="btn btn-danger" href="/Contest/EndContest">End contest</a>
+                }
+            }
+            if (ViewBag.IsAdmin && ViewBag.ContestOver)
+            {
+                <h4>The contest has ended. The winner is: <strong>@ViewBag.Winner.DisplayName</strong></h4>
+                <br />
+                using (Html.BeginForm(actionName: "DeleteContest", controllerName: "Contest"))
+                {
+                    <a class="btn btn-danger" href="/Contest/DeleteContest">Delete contest</a>
+                }
+            }
+            <br />
+            <h4>Prize pool: @ViewBag.PrizePool</h4>
+            <br/>
+            <h4 style="padding-bottom:10px">Your ranking:</h4>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10"><strong>@ViewBag.UserPlace.</strong>   @ViewBag.CurrentUser.DisplayName</div>
+                        <div class="col-2"><strong style="float:right">@ViewBag.CurrentUser.AmountBetSoFar</strong></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <br />
+            <h4 style="padding-bottom:10px">Leaderboard:</h4>
+            <div class="card">
+                <div class="card-body">
+                    @{int i = 1;}
+                    @foreach (var user in ViewBag.Users)
+                    {
+                        <div class="row">
+                            <div class="col-10"><strong>@i.</strong>   @user.DisplayName</div>
+                            <div class="col-2"><strong style="float:right">@user.AmountBetSoFar</strong></div>
+                        </div>
+                        { i++; }
+                        <hr />
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <h4>There is no contest at the moment. Check back later!</h4>
+            <br />
+            if (ViewBag.IsAdmin)
+            {
+                using (Html.BeginForm(actionName: "StartContest", controllerName: "Contest"))
+                {
+                    <a class="btn btn-info" href="/Contest/StartContest">Start a new contest</a>
+                }
+            }
+        }
+    </div>
+
+

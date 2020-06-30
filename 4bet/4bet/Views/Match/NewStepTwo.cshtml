@@ -1,0 +1,42 @@
+﻿
+@model _4bet.Models.FootballMatch
+@{
+    ViewBag.Title = "New match";
+}
+
+<h2>Add a new match</h2>
+
+@using (Html.BeginForm(actionName: "NewStepTwo", controllerName: "Match"))
+{
+    @Html.Hidden("FootballMatchId", Model.FootballMatchId)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Label("FirstTeamId", "First team")
+    <br />
+    <select class="form-control" name="FirstTeamId">
+        @foreach (var team in ViewBag.Teams)
+        {
+                <option value="@team.TeamId">
+                    @team.TeamName
+                </option>
+        }
+    </select>
+    <br />
+    <br />
+
+    @Html.Label("SecondTeamId", "Second team")
+    <br />
+    <select class="form-control" name="SecondTeamId">
+        @foreach (var team in ViewBag.Teams)
+        {
+                <option value="@team.TeamId">
+                    @team.TeamName
+                </option>
+        }
+    </select>
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Next step</button>
+}
+
+

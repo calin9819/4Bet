@@ -1,0 +1,33 @@
+﻿@model _4bet.Models.Championship
+@{
+    ViewBag.Title = "Add new championship";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("New", "Championship", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("championshipName", "Championship name:")
+    <br />
+
+    @Html.TextBox("championshipName", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.ChampionshipName, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("country", "Country:")
+    <br />
+
+    @Html.TextBox("country", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+    <br />
+
+
+    <label for="file"> Upload Image:</label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <br />
+    <br/>
+
+    <button class="btn btn-primary" type="submit">Add championship</button>
+}

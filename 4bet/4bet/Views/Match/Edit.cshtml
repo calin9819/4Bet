@@ -1,0 +1,39 @@
+﻿@model _4bet.Models.FootballMatch
+
+<h2>Edit match</h2>
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Match"))
+{
+    @Html.Hidden("FootballMatchId", Model.FootballMatchId)
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("FirstTeam", "First team")
+    <br />
+
+    @Html.TextBox("FirstTeam", null, new { @class = "form-control" })
+    <br />
+    @Html.Label("SecondTeam", "Second team")
+    <br />
+    @Html.TextBox("SecondTeam", null, new { @class = "form-control" })
+    <br />
+    @Html.Label("FirstTeamWinsOdd", "Odd if the first team wins")
+    <br />
+    @Html.TextBox("FirstTeamWinsOdd", null, new { @class = "form-control" })
+    <br />
+    @Html.Label("SecondTeamWinsOdd", "Odd if the second team wins")
+    <br />
+    @Html.TextBox("SecondTeamWinsOdd", null, new { @class = "form-control" })
+    <br />
+    @Html.Label("DrawOdd", "Odd if the match ends in a draw")
+    <br />
+    @Html.TextBox("DrawOdd", null, new { @class = "form-control" })
+    <br />
+    @Html.Label("ResolveTime", "Date and time")
+    <br />
+    @Html.TextBox("ResolveTime", null, new { @class = "form-control" })
+    <br />
+    <br />
+
+    <button class="btn btn-success" type="submit">Save changes</button>
+}
+

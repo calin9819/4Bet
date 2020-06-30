@@ -1,0 +1,49 @@
+﻿
+@model _4bet.Models.FootballMatch
+@{
+    ViewBag.Title = "Match history";
+}
+
+<div class="container">
+    <h3>
+        Past matches
+        @if (@ViewBag.isAdmin == true)
+        {
+            <a class="btn btn-primary float-right" href="/Match/New"><i class='fas fa-plus'></i></a>
+        }
+    </h3>
+    <br/>
+    @foreach (var match in ViewBag.Matches)
+    {
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                @if (@match.Outcome == "1")
+                {
+                    <p>@match.FirstTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "2")
+                {
+                    <p>@match.SecondTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "3")
+                {
+                    <p>The match ended in a draw</p>
+                }
+                @if (@ViewBag.isAdmin == true)
+                {
+                    <br />
+                    using (Html.BeginForm(actionName: "Delete", controllerName: "Match", routeValues: new { id = @match.FootballMatchId }))
+                    {
+
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    }
+                }
+            </div>
+        </div>
+        <br />
+    }
+</div>

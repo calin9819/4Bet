@@ -1,0 +1,52 @@
+﻿@model _4bet.Models.FootballMatch
+@{
+    ViewBag.Title = "Matches";
+}
+
+    <div class="container">
+        <h3>
+            Current matches  
+            <a class="btn btn-primary float-right" href="/Match/PastMatches"><i class="fa fa-history"></i></a>
+            @if (@ViewBag.isAdmin == true)
+            {
+                <a class="btn btn-primary float-right" href="/Match/New" style="margin-right: 10px"><i class='fas fa-plus'></i></a>
+            }
+        </h3>
+        
+           
+        <br />
+
+        @foreach (var match in ViewBag.Matches)
+        {
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                            <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                            <p class="card-text">Odds: <br/> @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. <br/> @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. <br/> Draw - @match.DrawOdd</p>
+                            <p class="card-text">@match.ResolveTime</p>
+                            <a class="btn btn-primary card-link" href="/Bet/FootballMatch/@match.FootballMatchId">Place bet</a>
+                            @if (@ViewBag.isAdmin == true)
+                            {
+                                <a class="btn btn-primary card-link" href="/Match/Resolve/@match.FootballMatchId">Resolve</a>
+                                <br />
+                                <br />
+                                using (Html.BeginForm(actionName: "Delete", controllerName: "Match", routeValues: new { id = @match.FootballMatchId }))
+                                {
+
+                                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                }
+                            }
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="~/Assets/@match.Championship.PhotoFileName" alt="Image unavailable" class="match-photo" style="width:215px; height:295px; float: right;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        }
+    </div>

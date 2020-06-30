@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+<div class="card">
+    <div style="text-align: center; padding-top: 20px">
+        <h3>Hello, @ViewBag.DisplayName!</h3>
+    </div>
+    <div class="card-body" id="profile-body">
+        <h5>You have @ViewBag.Betcoins Betcoins!</h5><br/>
+        <a class="btn btn-primary profile-button" href="/Profile/Edit/@ViewBag.UserId"><i class='far fa-edit' style="color: white;"></i></a>
+        <a class="btn btn-primary profile-button" href="/Manage/ChangePassword">Change password</a>
+        <a class="btn btn-primary profile-button" href="/Profile/AddBetcoins/@ViewBag.UserId">Add Betcoins</a>
+        <a class="btn btn-primary profile-button" href="/Profile/CashOut/@ViewBag.UserId">Cash out</a>
+        @if (ViewBag.isAdmin)
+        {
+            if (!ViewBag.AutoPlay)
+            {
+                <a class="btn btn-success profile-button" href="/Profile/ChangeAutoplay">Enable autoplay</a>
+            }
+            else
+            {
+                <a class="btn btn-danger profile-button" href="/Profile/ChangeAutoplay">Disable autoplay</a>
+            }
+        }
+    </div>
+</div>
+
+

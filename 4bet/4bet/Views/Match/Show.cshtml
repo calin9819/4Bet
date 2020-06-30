@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Match details</h2>
+
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+        <h4 class="card-title">@ViewBag.Match.FirstTeam.TeamName - @ViewBag.Match.SecondTeam.TeamName</h4>
+        <p class="card-text">@ViewBag.Match.Championship.ChampionshipName - @ViewBag.Match.Championship.Country</p>
+        <p class="card-text">Odds: @ViewBag.Match.FirstTeam.TeamName wins - @ViewBag.Match.FirstTeamWinsOdd. @ViewBag.Match.SecondTeam.TeamName wins - @ViewBag.Match.SecondTeamWinsOdd. Draw - @ViewBag.Match.DrawOdd</p>
+        <p class="card-text">@ViewBag.Match.ResolveTime</p>
+        <a class="btn btn-primary card-link" href="/Bet/FootballMatch/@ViewBag.Match.FootballMatchId">Place bet</a>
+        @if (@ViewBag.isAdmin == true)
+        {
+            <a class="btn btn-primary card-link" href="/Match/Resolve/@ViewBag.Match.FootballMatchId">Resolve</a>
+            <br />
+            <br />
+            using (Html.BeginForm(actionName: "Delete", controllerName: "Match", routeValues: new { id = @ViewBag.Match.FootballMatchId }))
+            {
+
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                <button class="btn btn-danger" type="submit">Delete</button>
+            }
+        }
+    </div>
+</div>

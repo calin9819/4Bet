@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Your current selected bets</h2>
+@if (@ViewBag.isEmpty)
+{
+    <h4>No bets added!</h4>
+    <br/>
+    <a class="btn btn-primary" href="/Match/Index">Make bet</a>
+}
+else
+{
+<div class="well">
+    @if (ViewBag.NotEnoughBetcoins)
+    {
+        <div class="alert alert-danger">
+            <strong>Attention!</strong> You don't have enough betcoins for this ticket!
+            <br /> <br/>
+            <a class="btn btn-danger" href="/Profile/AddBetcoins/@ViewBag.User">Add more betcoins</a>
+        </div>
+    }
+    <p>Total to be spent: @ViewBag.TotalSpent</p>
+    <p>Potential winnings: @ViewBag.PotentialWinnings</p>
+    @if (!ViewBag.NotEnoughBetcoins)
+    {
+        <a class="btn btn-primary" href="/Bet/Payment">Confirm selection</a>
+        <br />
+        <br />
+    }
+
+</div>
+}
+@foreach (var bet in @ViewBag.Bets)
+{
+    <div class="card" style="width: 100%">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-8">
+                    <p>Players: <strong>@bet.FirstPlayer</strong> - <strong>@bet.SecondPlayer</strong></p>
+                    @if (bet.OutcomeChoice == 1)
+                    {
+                        <p>You bet @bet.FirstPlayer will win the match!</p>
+                    }
+                    @if (bet.OutcomeChoice == 2)
+                    {
+                        <p>You bet @bet.SecondPlayer will win the match!</p>
+                    }
+                    @if (bet.OutcomeChoice == 3)
+                    {
+                        <p>You bet the match will end in a draw!</p>
+                    }
+                    <p>Odd: @bet.Odd</p>
+                    <p>Amount bet: @bet.Amount</p>
+                    <p>Match will be played: @bet.ResolveTime</p>
+                </div>
+                <div class="col-sm-4">
+                    <img src="~/Assets/@bet.FootballMatch.Championship.PhotoFileName" class="match-photo" alt="Image unavailable" style="width:215px; height:295px; float: right;">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            @using (Html.BeginForm(actionName: "Delete", controllerName: "Bet", routeValues: new { id = bet.BetId }))
+            {
+
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <a class="btn btn-info" href="/Match/Show/@bet.MatchId">Match details</a>
+                <button class="btn btn-danger" type="submit">Delete</button>
+            }
+        </div>
+    </div>
+    <br/>
+    <br/>
+}
+

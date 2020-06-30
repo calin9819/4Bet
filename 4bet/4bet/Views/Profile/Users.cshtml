@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+    <div class="container">
+        <h3>
+            Users
+        </h3>
+
+
+        <br />
+
+        @foreach (var user in ViewBag.Users)
+        {
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@user.Email</h4>
+                    </div>
+                </div>
+
+            <br/>
+        }
+    </div>

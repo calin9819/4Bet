@@ -1,0 +1,37 @@
+﻿@model _4bet.Models.Team
+@{
+    ViewBag.Title = "Edit team";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Team"))
+{
+    @Html.Hidden("TeamId", Model.TeamId)
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("TeamName", "Team name:")
+    <br />
+
+    @Html.TextBox("TeamName", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.TeamName, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("ChampionshipId", "Championship:")
+    <br />
+    <select class="form-control" name="championshipId">
+        @foreach (var championship in ViewBag.Championships)
+        {
+            <option value="@championship.ChampionshipId">
+                @championship.ChampionshipName
+            </option>
+        }
+    </select>
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Save changes</button>
+}

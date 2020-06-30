@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Bet";
+}
+
+<h2>Place bet</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("OddChoice", "Choose outcome")
+    <br />
+    <br />
+    <span>@ViewBag.Match.FirstTeam.TeamName wins - @ViewBag.Match.FirstTeamWinsOdd:</span> @Html.RadioButton("OddChoice", "1")
+    <br />
+    <span>@ViewBag.Match.SecondTeam.TeamName wins - @ViewBag.Match.SecondTeamWinsOdd:</span> @Html.RadioButton("OddChoice", "2")
+    <br />
+    <span>Draw - @ViewBag.Match.DrawOdd:</span> @Html.RadioButton("OddChoice", "3")
+    <br />
+    <br />
+    @Html.Label("Amount", "How many Betcoins do you want to bet?")
+    <br />
+
+    @Html.TextBox("Amount", null, new { @class = "form-control" })
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Add bet</button>
+}
+<br/>
+<hr/>
+<div>
+    <h4>History of @ViewBag.Match.FirstTeam.TeamName and @ViewBag.Match.SecondTeam.TeamName</h4>
+    @foreach (var match in ViewBag.PastMatches)
+    {
+        <div class="card" style="width: 100%; min-height:250px">
+            <div class="card-body">
+                <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                <p class="card-text">Odds: @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. Draw - @match.DrawOdd</p>
+                @if (@match.Outcome == "1")
+                {
+                    <p>@match.FirstTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "2")
+                {
+                    <p>@match.SecondTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "3")
+                {
+                    <p>The match ended in a draw</p>
+                }
+            </div>
+        </div>
+        <br />
+    }
+    @if (!ViewBag.HasHistory)
+    {
+        <div class="alert alert-info">
+             No past matches.
+        </div>
+    }
+</div>
+

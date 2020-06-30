@@ -1,0 +1,133 @@
+﻿
+@model _4bet.Models.FootballMatch
+@{
+    ViewBag.Title = "New match";
+}
+
+<h2>Add a new match</h2>
+
+@using (Html.BeginForm(actionName: "NewStepThree", controllerName: "Match"))
+{
+    @Html.Hidden("FootballMatchId", Model.FootballMatchId)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    string label1 = ViewBag.FirstLabel;
+    string label2 = ViewBag.SecondLabel;
+
+    @Html.Label("FirstTeamWinsOdd", label1)
+    <br />
+    <input type="number" step="0.01" name="FirstTeamWinsOdd" class="form-control" min="1" />
+    <br />
+    @Html.Label("SecondTeamWinsOdd", label2)
+    <br />
+    <input type="number" step="0.01" name="SecondTeamWinsOdd" class="form-control" min="1" />
+    <br />
+    @Html.Label("DrawOdd", "Odd if the match ends in a draw")
+    <br />
+    <input type="number" step="0.01" name="DrawOdd" class="form-control" min="1"/>
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Add match</button>
+}
+
+<hr />
+    <div >
+        <h4>Match history of @ViewBag.FirstTeam</h4>
+        @foreach (var match in ViewBag.firstTeamMatches)
+        {
+            <div class="card" style="width: 100%; min-height:250px">
+                <div class="card-body">
+                    <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                    <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                    <p class="card-text">Odds: @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. Draw - @match.DrawOdd</p>
+                    @if (@match.Outcome == "1")
+                    {
+                        <p>@match.FirstTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "2")
+                    {
+                        <p>@match.SecondTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "3")
+                    {
+                        <p>The match ended in a draw</p>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+        @if (!ViewBag.FirstHistory)
+        {
+            <div class="alert alert-info m-2">
+                No past matches.
+            </div>
+        }
+    </div>
+<hr/>
+    <div>
+        <h4>Match history of @ViewBag.SecondTeam</h4>
+        @foreach (var match in ViewBag.secondTeamMatches)
+        {
+            <div class="card" style="width: 100%;  min-height:250px">
+                <div class="card-body">
+                    <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                    <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                    <p class="card-text">Odds: @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. Draw - @match.DrawOdd</p>
+                    @if (@match.Outcome == "1")
+                    {
+                        <p>@match.FirstTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "2")
+                    {
+                        <p>@match.SecondTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "3")
+                    {
+                        <p>The match ended in a draw</p>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+        @if (!ViewBag.SecondHistory)
+        {
+            <div class="alert alert-info m-2">
+                No past matches.
+            </div>
+        }
+    </div>
+<hr/>
+    <div>
+        <h4>History of both teams</h4>
+        @foreach (var match in ViewBag.bothTeamsMatches)
+        {
+            <div class="card" style="width: 100%; min-height:250px">
+                <div class="card-body">
+                    <h4 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h4>
+                    <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                    <p class="card-text">Odds: @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. Draw - @match.DrawOdd</p>
+                    @if (@match.Outcome == "1")
+                    {
+                        <p>@match.FirstTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "2")
+                    {
+                        <p>@match.SecondTeam.TeamName won!</p>
+                    }
+                    @if (@match.Outcome == "3")
+                    {
+                        <p>The match ended in a draw</p>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+        @if (!ViewBag.BothHistory)
+        {
+            <div class="alert alert-info m-2">
+                No past matches.
+            </div>
+        }
+    </div>

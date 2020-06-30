@@ -1,0 +1,24 @@
+﻿@model _4bet.Models.Profile
+@{
+    ViewBag.Title = "Add Betcoins";
+}
+
+<h2>Add Betcoins</h2>
+<div>
+    <p>You have @ViewBag.Betcoins Betcoins.</p>
+    @using (Html.BeginForm(actionName: "AddBetcoins", controllerName: "Profile"))
+    {
+        @Html.Hidden("UserId", Model.UserId)
+
+        @Html.HttpMethodOverride(HttpVerbs.Put)
+
+        @Html.Label("NewBetcoins", "How many Betcoins do you want to add?")
+        <br />
+        <input type="number" name="NewBetcoins" class="form-control"/>
+        <br />
+        <br />
+
+        <button class="btn btn-primary" type="submit">Add Betcoins</button>
+    }
+</div>
+

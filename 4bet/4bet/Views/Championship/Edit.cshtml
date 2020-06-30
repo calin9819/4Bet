@@ -1,0 +1,27 @@
+﻿@model _4bet.Models.Championship
+@{
+    ViewBag.Title = "Edit championship";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Championship"))
+{
+    @Html.Hidden("ChampionshipId", Model.ChampionshipId)
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("ChampionshipName", "Championship name:")
+    <br />
+
+    @Html.TextBox("ChampionshipName", null, new { @class = "form-control" })
+    <br />
+
+    @Html.Label("Country", "Country:")
+    <br />
+
+    @Html.TextBox("Country", null, new { @class = "form-control" })
+    <br />
+
+    <button class="btn btn-primary" type="submit">Save changes</button>
+}

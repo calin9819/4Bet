@@ -1,0 +1,97 @@
+﻿<div class="container" >
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>
+                @ViewBag.Championship.ChampionshipName
+                @if (@ViewBag.isAdmin == true)
+                {
+                    <a class="btn btn-primary float-right" href="/Championship/Edit/@ViewBag.Championship.ChampionshipId"><i class='far fa-edit' style="color: white;"></i></a>
+                }
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="~/Assets/@ViewBag.Championship.PhotoFileName" alt="Image unavailable" style="height:250px">
+        </div>
+    </div>
+    <hr />
+    <h4>Teams</h4>
+    <br/>
+    <div class="card-columns" style="text-align: center">
+        @foreach (var team in ViewBag.Teams)
+        {
+            <a href="/Team/Show/@team.TeamId" style="color: black; text-decoration:none">
+                <div class="card" style="width:300px; height:450px">
+                    <img class="card-img-top" src="~/Assets/@team.PhotoFileName" alt="Image unavailable" style="width:298px; height:350px; overflow: hidden; padding: 5px">
+                    <div class="card-body">
+                        <h5 class="card-title">@team.TeamName</h5>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+    @if (ViewBag.HasMatches)
+    {
+        <hr />
+        <h4>Current matches</h4>
+        <br/>
+    }
+    @foreach (var match in ViewBag.Matches)
+    {
+        <div class="card" style="width: 100%; text-align: center">
+            <div class="card-body">
+                <h5 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h5>
+                <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                <p class="card-text">Odds: <br/> @match.FirstTeam.TeamName wins - @match.FirstTeamWinsOdd. <br/> @match.SecondTeam.TeamName wins - @match.SecondTeamWinsOdd. <br/> Draw - @match.DrawOdd</p>
+                <p class="card-text">@match.ResolveTime</p>
+                <a class="btn btn-primary card-link" href="/Bet/FootballMatch/@match.FootballMatchId">Place bet</a>
+                @if (@ViewBag.isAdmin == true)
+                {
+                    <a class="btn btn-primary card-link" href="/Match/Resolve/@match.FootballMatchId">Resolve</a>
+                    <br />
+                }
+            </div>
+        </div>
+        <br />
+    }
+    @if (ViewBag.HasHistory)
+    {
+        <hr />
+        <h4>Past matches</h4>
+        <br/>
+    }
+    @foreach (var match in ViewBag.PastMatches)
+    {
+        <div class="card" style="width: 100%; text-align: center">
+            <div class="card-body">
+                <h5 class="card-title">@match.FirstTeam.TeamName - @match.SecondTeam.TeamName</h5>
+                <p class="card-text">@match.Championship.ChampionshipName - @match.Championship.Country</p>
+                @if (@match.Outcome == "1")
+                {
+                    <p>@match.FirstTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "2")
+                {
+                    <p>@match.SecondTeam.TeamName won!</p>
+                }
+                @if (@match.Outcome == "3")
+                {
+                    <p>The match ended in a draw</p>
+                }
+                @if (@ViewBag.isAdmin == true)
+                {
+                    <br />
+                    using (Html.BeginForm(actionName: "Delete", controllerName: "Match", routeValues: new { id = @match.FootballMatchId }))
+                    {
+
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    }
+                }
+            </div>
+        </div>
+        <br />
+    }
+</div>

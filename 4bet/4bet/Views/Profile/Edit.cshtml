@@ -1,0 +1,18 @@
+﻿@model _4bet.Models.Profile
+
+<h2>Edit profile</h2>
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Profile"))
+{
+    @Html.Hidden("UserId", Model.UserId)
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("DisplayName", "Display name")
+    <br />
+    @Html.Editor("DisplayName", new { @class = "form-control" })
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Save changes</button>
+}
+

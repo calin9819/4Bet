@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>Waiting for matches to be played</h2>
+
+@foreach (var bet in ViewBag.BetsInWaiting)
+{
+    <div class="card">
+        <div class="card-body">
+            <p>Players: <strong>@bet.FirstPlayer</strong> - <strong>@bet.SecondPlayer</strong></p>
+            @if (bet.OutcomeChoice == 1)
+            {
+                <p>You bet @bet.FirstPlayer will win the match!</p>
+            }
+            @if (bet.OutcomeChoice == 2)
+            {
+                <p>You bet @bet.SecondPlayer will win the match!</p>
+            }
+            @if (bet.OutcomeChoice == 3)
+            {
+                <p>You bet the match will end in a draw!</p>
+            }
+            <p>Odd: @bet.Odd</p>
+            <p>Amount bet: @bet.Amount</p>
+            <p>Match will be played: @bet.ResolveTime</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-info" href="/Match/Show/@bet.MatchId">Match details</a> <br /> <br />
+        </div>
+    </div>
+    <br/>
+}
+
+<hr/>
+
+<h2>Bets that were concluded</h2>
+
+@foreach (var bet in ViewBag.BetsConcluded)
+{
+    <div class="card">
+        <div class="card-body">
+            <p>Players: <strong>@bet.FirstPlayer</strong> - <strong>@bet.SecondPlayer</strong></p>
+            @if (bet.Winner)
+            {
+                <div class="alert alert-success">
+                    <p>Congratulations! You have won!</p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <p>Better luck next time!</p>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            @using (Html.BeginForm(actionName: "Delete", controllerName: "Bet", routeValues: new { id = bet.BetId }))
+            {
+
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                <button class="btn btn-danger" type="submit">Delete</button>
+            }
+        </div>
+    </div>
+    <br/>
+}

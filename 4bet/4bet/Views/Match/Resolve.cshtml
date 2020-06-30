@@ -1,0 +1,30 @@
+﻿@model _4bet.Models.FootballMatch
+
+@{
+    ViewBag.Title = "Resolve";
+}
+
+<h2>Set match outcome</h2>
+
+@using (Html.BeginForm(actionName: "Resolve", controllerName: "Match"))
+{
+    @Html.Hidden("FootballMatchId", Model.FootballMatchId)
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("Outcome", "Choose outcome:")
+    <br />
+    <select class="form-control" name="Outcome">
+        @foreach (var obj in ViewBag.Outcomes)
+        {
+            <option value="@obj.Value">
+                @obj.Text
+            </option>
+        }
+    </select>
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Resolve match</button>
+}

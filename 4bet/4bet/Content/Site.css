@@ -1,0 +1,45 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 50px;
+    background-color: #fff;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+body {
+    font-size: 20px;
+}
+
+nav {
+    min-height: 100px;
+}
+.navbar-brand {
+    font-size: 24px;
+}
+
+@media screen and (max-width: 800px) {
+    .match-photo {
+        display: none;
+    }
+}
+
+    .profile-button {
+        width: 200px;
+        margin-bottom: 10px;
+    }
+
+    #profile-body {
+        text-align: center;
+    }

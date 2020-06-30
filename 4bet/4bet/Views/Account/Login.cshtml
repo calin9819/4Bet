@@ -1,0 +1,32 @@
+﻿@using _4bet.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+    <div class="card" style="border-color: white; border-radius: 8px; text-align: center; background-color: white; padding: 40px 20px; position: absolute; top: 50%; left: 50%; width: 350px; transform: translate(-50%, -50%)">
+        <img style="width:80px; height:80px; align-self:center" src="~/Logo/4BetLogo.png"/>
+        <h3>Welcome to 4Bet!</h3>
+        <div class="card-body">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style="width: 100%; margin-bottom: 15px", placeholder="Email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", style="width: 100%; margin-bottom: 15px", placeholder="Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    <div class="checkbox" style="margin-bottom: 15px">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <input style="width: 100%; margin-bottom: 15px" type="submit" value="Log in" class="btn btn-primary" />
+                    @Html.ActionLink("Sign up", "Register")
+                }
+            </section>
+        </div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/Login.css")
+}

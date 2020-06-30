@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create your profile</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Profile"))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("DisplayName", "Display name")
+    <br />
+
+    @Html.Editor("DisplayName", new { @class = "form-control" })
+    <br />
+    <br />
+
+    <button class="btn btn-primary" type="submit">Save</button>
+}
+
+

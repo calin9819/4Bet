@@ -1,0 +1,23 @@
+﻿@model _4bet.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Sign up";
+}
+    <div class="card" style="border-color: white; border-radius: 8px; text-align: center; background-color: white; padding: 40px 20px; position: absolute; top: 50%; left: 50%; width: 350px; transform: translate(-50%, -50%)">
+        <img style="width:80px; height:80px; align-self:center" src="~/Logo/4BetLogo.png" />
+        <h3>Welcome to 4Bet!</h3>
+        <div class="card-body">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width: 100%; margin-bottom: 15px", placeholder = "Email" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "width: 100%; margin-bottom: 15px", placeholder = "Password" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", style = "width: 100%; margin-bottom: 15px", placeholder = "Confirm password" })
+                <input type="submit" class="btn btn-primary" value="Register" style="width: 100%; margin-bottom: 15px" />
+                @Html.ActionLink("Log in instead", "Login")
+            }
+        </div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
